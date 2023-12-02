@@ -79,6 +79,7 @@ class _TelaCadastroState extends State<TelaCadastro> {
               TextFormField(
                 controller: _populacaoController,
                 decoration: InputDecoration(labelText: 'População'),
+                keyboardType: TextInputType.number,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Campo obrigatório';
@@ -89,6 +90,7 @@ class _TelaCadastroState extends State<TelaCadastro> {
               TextFormField(
                 controller: _areaController,
                 decoration: InputDecoration(labelText: 'Área'),
+                keyboardType: TextInputType.number,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Campo obrigatório';
@@ -99,6 +101,7 @@ class _TelaCadastroState extends State<TelaCadastro> {
               TextFormField(
                 controller: _anoFundacaoController,
                 decoration: InputDecoration(labelText: 'Ano de Fundação'),
+                keyboardType: TextInputType.number,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Campo obrigatório';
