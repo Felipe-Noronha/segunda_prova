@@ -75,4 +75,13 @@ class DatabaseHelper {
     );
     return maps.isNotEmpty ? maps.first : null;
   }
+
+  Future<int> deleteCidade(int id) async {
+    final Database db = await database;
+    return await db.delete(
+      tableName,
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+  }
 }

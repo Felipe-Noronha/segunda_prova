@@ -74,11 +74,57 @@ class _TelaAlteraState extends State<TelaAltera> {
     }
   }
 
+  Future<void> _excluirCidade(BuildContext context) async {
+    await DatabaseHelper().deleteCidade(widget.id);
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Cidade excluída com sucesso!'),
+      ),
+    );
+
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => TelaHome()),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Alterar Cidade'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.delete),
+            onPressed: () async {
+              bool confirmado = await showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: Text('Confirmar Exclusão'),
+                    content:
+                        Text('Tem certeza de que deseja excluir esta cidade?'),
+                    actions: [
+                      TextButton(
+                        onPressed: () => Navigator.of(context).pop(false),
+                        child: Text('Cancelar'),
+                      ),
+                      TextButton(
+                        onPressed: () => Navigator.of(context).pop(true),
+                        child: Text('Confirmar'),
+                      ),
+                    ],
+                  );
+                },
+              );
+
+              if (confirmado == true) {
+                await _excluirCidade(context);
+              }
+            },
+          ),
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
