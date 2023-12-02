@@ -126,67 +126,70 @@ class _TelaAlteraState extends State<TelaAltera> {
           ),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              TextFormField(
-                controller: _nomeController,
-                decoration: InputDecoration(labelText: 'Nome'),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Por favor, insira o nome';
-                  }
-                  return null;
-                },
-              ),
-              TextFormField(
-                controller: _idiomaController,
-                decoration: InputDecoration(labelText: 'Idioma'),
-                // Validator e outros atributos conforme necessário
-              ),
-              TextFormField(
-                controller: _populacaoController,
-                decoration: InputDecoration(labelText: 'População'),
-                keyboardType: TextInputType.number,
-              ),
-              TextFormField(
-                controller: _areaController,
-                decoration: InputDecoration(labelText: 'Área'),
-                keyboardType: TextInputType.number,
-              ),
-              TextFormField(
-                controller: _anoFundacaoController,
-                decoration: InputDecoration(labelText: 'Ano de Fundação'),
-                keyboardType: TextInputType.number,
-              ),
-              Row(
-                children: [
-                  Checkbox(
-                    value: _possuiAeroporto,
-                    onChanged: (value) {
-                      setState(() {
-                        _possuiAeroporto = value ?? false;
-                      });
-                    },
-                  ),
-                  Text('Possui Aeroporto'),
-                ],
-              ),
-              SizedBox(height: 16.0),
-              ElevatedButton(
-                onPressed: () async {
-                  await _alterarCidade(context);
-                },
-                child: Text('Confirmar'),
-              ),
-            ],
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                TextFormField(
+                  controller: _nomeController,
+                  decoration: InputDecoration(labelText: 'Nome'),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Por favor, insira o nome';
+                    }
+                    return null;
+                  },
+                ),
+                TextFormField(
+                  controller: _idiomaController,
+                  decoration: InputDecoration(labelText: 'Idioma'),
+                  // Validator e outros atributos conforme necessário
+                ),
+                TextFormField(
+                  controller: _populacaoController,
+                  decoration: InputDecoration(labelText: 'População'),
+                  keyboardType: TextInputType.number,
+                ),
+                TextFormField(
+                  controller: _areaController,
+                  decoration: InputDecoration(labelText: 'Área'),
+                  keyboardType: TextInputType.number,
+                ),
+                TextFormField(
+                  controller: _anoFundacaoController,
+                  decoration: InputDecoration(labelText: 'Ano de Fundação'),
+                  keyboardType: TextInputType.number,
+                ),
+                Row(
+                  children: [
+                    Checkbox(
+                      value: _possuiAeroporto,
+                      onChanged: (value) {
+                        setState(() {
+                          _possuiAeroporto = value ?? false;
+                        });
+                      },
+                    ),
+                    Text('Possui Aeroporto'),
+                  ],
+                ),
+                SizedBox(height: 16.0),
+                ElevatedButton(
+                  onPressed: () async {
+                    await _alterarCidade(context);
+                  },
+                  child: Text('Confirmar'),
+                ),
+              ],
+            ),
           ),
         ),
       ),
+      resizeToAvoidBottomInset: true,
     );
   }
 }

@@ -15,6 +15,7 @@ class _TelaCadastroState extends State<TelaCadastro> {
   final TextEditingController _areaController = TextEditingController();
   final TextEditingController _anoFundacaoController = TextEditingController();
   bool _possuiAeroporto = false;
+  final FocusNode _nomeFocus = FocusNode(); // Foco para o campo nome
 
   void _cadastrarCidade(BuildContext context) {
     if (_formKey.currentState?.validate() ?? false) {
@@ -49,90 +50,94 @@ class _TelaCadastroState extends State<TelaCadastro> {
       appBar: AppBar(
         title: Text('Cadastro de Cidade'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              TextFormField(
-                controller: _nomeController,
-                decoration: InputDecoration(labelText: 'Nome'),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Campo obrigatório';
-                  }
-                  return null;
-                },
-              ),
-              TextFormField(
-                controller: _idiomaController,
-                decoration: InputDecoration(labelText: 'Idioma'),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Campo obrigatório';
-                  }
-                  return null;
-                },
-              ),
-              TextFormField(
-                controller: _populacaoController,
-                decoration: InputDecoration(labelText: 'População'),
-                keyboardType: TextInputType.number,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Campo obrigatório';
-                  }
-                  return null;
-                },
-              ),
-              TextFormField(
-                controller: _areaController,
-                decoration: InputDecoration(labelText: 'Área'),
-                keyboardType: TextInputType.number,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Campo obrigatório';
-                  }
-                  return null;
-                },
-              ),
-              TextFormField(
-                controller: _anoFundacaoController,
-                decoration: InputDecoration(labelText: 'Ano de Fundação'),
-                keyboardType: TextInputType.number,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Campo obrigatório';
-                  }
-                  return null;
-                },
-              ),
-              Row(
-                children: [
-                  Text('Possui Aeroporto: '),
-                  Checkbox(
-                    value: _possuiAeroporto,
-                    onChanged: (value) {
-                      setState(() {
-                        _possuiAeroporto = value ?? false;
-                      });
-                    },
-                  ),
-                ],
-              ),
-              SizedBox(height: 16.0),
-              ElevatedButton(
-                onPressed: () {
-                  _cadastrarCidade(context);
-                },
-                child: Text('Cadastrar'),
-              ),
-            ],
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                TextFormField(
+                  controller: _nomeController,
+                  focusNode: _nomeFocus,
+                  decoration: InputDecoration(labelText: 'Nome'),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Campo obrigatório';
+                    }
+                    return null;
+                  },
+                ),
+                TextFormField(
+                  controller: _idiomaController,
+                  decoration: InputDecoration(labelText: 'Idioma'),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Campo obrigatório';
+                    }
+                    return null;
+                  },
+                ),
+                TextFormField(
+                  controller: _populacaoController,
+                  decoration: InputDecoration(labelText: 'População'),
+                  keyboardType: TextInputType.number,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Campo obrigatório';
+                    }
+                    return null;
+                  },
+                ),
+                TextFormField(
+                  controller: _areaController,
+                  decoration: InputDecoration(labelText: 'Área'),
+                  keyboardType: TextInputType.number,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Campo obrigatório';
+                    }
+                    return null;
+                  },
+                ),
+                TextFormField(
+                  controller: _anoFundacaoController,
+                  decoration: InputDecoration(labelText: 'Ano de Fundação'),
+                  keyboardType: TextInputType.number,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Campo obrigatório';
+                    }
+                    return null;
+                  },
+                ),
+                Row(
+                  children: [
+                    Text('Possui Aeroporto: '),
+                    Checkbox(
+                      value: _possuiAeroporto,
+                      onChanged: (value) {
+                        setState(() {
+                          _possuiAeroporto = value ?? false;
+                        });
+                      },
+                    ),
+                  ],
+                ),
+                SizedBox(height: 16.0),
+                ElevatedButton(
+                  onPressed: () {
+                    _cadastrarCidade(context);
+                  },
+                  child: Text('Cadastrar'),
+                ),
+              ],
+            ),
           ),
         ),
       ),
+      resizeToAvoidBottomInset: true,
     );
   }
 }
