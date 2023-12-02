@@ -3,8 +3,8 @@ import 'package:segunda_prova/domain/cidade.dart';
 import 'helpers/database_helper.dart';
 import 'ui/tela_sobre.dart';
 import 'ui/tela_cadastro.dart';
-import 'ui/tela_altera.dart'; // Importe a tela de alteração
-import 'ui/tela_detalhes.dart'; // Importe a tela de detalhes
+import 'ui/tela_altera.dart';
+import 'ui/tela_detalhes.dart';
 
 void main() {
   runApp(SegundaProvaApp());
@@ -14,10 +14,27 @@ class SegundaProvaApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: TelaHome(),
-      routes: {
-        '/cadastro': (context) => TelaCadastro(),
-        '/sobre': (context) => TelaSobre(),
+      initialRoute: '/home',
+      onGenerateRoute: (settings) {
+        if (settings.name == '/cadastro') {
+          return MaterialPageRoute(builder: (context) => TelaCadastro());
+        } else if (settings.name == '/sobre') {
+          return MaterialPageRoute(builder: (context) => TelaSobre());
+        } else if (settings.name == '/altera') {
+          final args = settings.arguments;
+          if (args is int) {
+            return MaterialPageRoute(
+                builder: (context) => TelaAltera(id: args));
+          }
+        } else if (settings.name == '/detalhes') {
+          final args = settings.arguments;
+          if (args is int) {
+            return MaterialPageRoute(
+                builder: (context) => TelaDetalhes(id: args));
+          }
+        }
+
+        return MaterialPageRoute(builder: (context) => TelaHome());
       },
     );
   }
@@ -74,19 +91,27 @@ class _TelaHomeState extends State<TelaHome> {
               itemCount: snapshot.data!.length,
               itemBuilder: (context, index) {
                 Cidade cidade = snapshot.data![index];
-                return ListTile(
-                  title: Text(cidade.nome),
-                  subtitle: Text('População: ${cidade.populacao}'),
+                return GestureDetector(
                   onTap: () {
-                    // Implemente a ação ao clicar na cidade se necessário
-                    // Por exemplo, navegar para uma tela de detalhes
-                    Navigator.pushNamed(context, '/detalhes');
+                    // Navegar para a tela de detalhes
+                    Navigator.pushNamed(
+                      context,
+                      '/detalhes',
+                      arguments: cidade.id,
+                    );
                   },
                   onLongPress: () {
-                    // Implemente a ação ao pressionar longamente na cidade
-                    // Por exemplo, navegar para uma tela de alteração
-                    Navigator.pushNamed(context, '/altera');
+                    // Navegar para a tela de alteração
+                    Navigator.pushNamed(
+                      context,
+                      '/altera',
+                      arguments: cidade.id,
+                    );
                   },
+                  child: ListTile(
+                    title: Text(cidade.nome),
+                    subtitle: Text('População: ${cidade.populacao}'),
+                  ),
                 );
               },
             );
